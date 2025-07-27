@@ -1,1 +1,1 @@
-# pytest-reportly
+# pytest-htmlx

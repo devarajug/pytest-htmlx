@@ -1,0 +1,6 @@
+include README.md
+recursive-include pytest_htmlx/reporter/templates *
+global-include *.py
+exclude tests/
+exclude assets/
+exclude poetry.lock

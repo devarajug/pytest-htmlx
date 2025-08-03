@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pytest-htmlx"
+version = "0.1.0"
+description = "Custom HTML report plugin for Pytest with charts and tables"
+authors = [{ name = "Devaraju Garigapati", email = "devaraju.garigapati@gmail.com" }]
+dependencies = ["pytest", "jinja2"]
+requires-python = ">=3.7"
+
+[project.entry-points.pytest11]
+htmlx = "pytest_htmlx.plugin"

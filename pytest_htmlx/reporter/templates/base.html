@@ -1,56 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Pytest HTMLX Report</title>
-    <link rel="stylesheet" href="assets/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: #1E293B;
+            color: #ffffff;
+            display: flex;
+            z-index: 1000;
+            align-items: center;
+        }
+
+        header h2 {
+            margin-left: 20px;
+        }
+
+
+
+        .container {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            grid-template-rows: 3fr 5fr;
+            gap: 10px;
+            margin-top: 60px;
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-bottom: 45px;
+        }
+
+
+
+        .test_summary {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .left-parent-grid {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .left-top-grid {
+            grid-row: 1;
+            grid-column: 1 / -1;
+            background: #bae6fd;
+            border-radius: 8px;
+            padding: 16px;
+            color: #0369a1;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .left-bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .left-bottom-grid-item {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 1px 4px rgba(30, 41, 59, 0.05);
+            text-align: center;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left-bottom-grid-item:nth-child(1) {
+            background: #b9cbed;
+            /* light green */
+            color: #323e49;
+            /* dark green text */
+        }
+
+        .left-bottom-grid-item:nth-child(2) {
+            background: #bbf7d0;
+            /* light green */
+            color: #166534;
+            /* dark green text */
+        }
+
+        .left-bottom-grid-item:nth-child(3) {
+            background: #fecaca;
+            /* light red */
+            color: #b91c1c;
+            /* dark red text */
+        }
+
+
+        .left-bottom-grid-item:nth-child(4) {
+            background: #fed7aa;
+            /* light orange */
+            color: #92400e;
+            /* dark orange text */
+        }
+
+        .left-bottom-grid-item p {
+            margin: 0;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .left-bottom-grid-item span {
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .test_charts {
+            background-color: #e2e2e2;
+            padding: 20px;
+            border-radius: 5px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            grid-template-rows: 5fr 5fr;
+
+
+        }
+
+        .pie {
+
+            grid-row: 1;
+            grid-column: 1;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+
+            display: flex;
+            /* Enable flex layout */
+            justify-content: center;
+            /* Center horizontally */
+            align-items: center;
+            /* Center vertically */
+            /* padding: 20px;                 Optional spacing */
+            height: 100%;
+            /* Or a fixed height */
+            width: 100%;
+
+        }
+
+        .pie canvas {
+            width: 200px;
+            height: 200px;
+        }
+
+        .graph {
+            grid-row: 1;
+            grid-column: 2;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+        }
+
+        .bar {
+            grid-row: 2;
+            grid-column: 1 / -1;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+
+            display: flex;
+            /* Enable flex layout */
+            justify-content: center;
+            /* Center horizontally */
+            align-items: center;
+            /* Center vertically */
+            height: 100%;
+            /* Or a fixed height */
+            width: 100%;
+        }
+
+        .test_table {
+            background-color: #e2e2e2;
+            padding: 20px;
+            border-radius: 5px;
+            grid-row: span 2;
+            grid-column: span 1;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: #1E293B;
+            color: #cccccc;
+            display: flex;
+            z-index: 1000;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 5fr 2fr;
+            gap: 10px;
+            align-items: center;
+            height: 100%;
+            margin-left: 15px;
+        }
+
+        .version {
+            justify-self: start;
+            grid-column: 1;
+        }
+
+        .author {
+            justify-self: end;
+            /* justify-content: right; */
+            grid-column: 3;
+        }
+    </style>
+
+    <title>pytest-htmlx</title>
 </head>
+
 <body>
-    <body>
     <header>
-        <h1 class="title" id="title">PYTEST HTML REPORT</h1>
+        <h2>PYTEST HTMLX REPORT</h2>
     </header>
-    <div class="sidebar">
-        <button class="nav-btn">Home</button>
-        <button class="nav-btn">Logs</button>
-        <!-- Add more buttons here if needed -->
-    </div>
-    
-    <div class="content" id="content">
-        <div class="left-panel">
-            <div class="left-parent-grid">
-                <!-- Top grid: summary title, spans all columns -->
-                <div class="left-top-grid">
-                    <h3 style="margin:0; text-align:center;">Test Case Count Summary</h3>
-                </div>
-                <!-- Bottom grid: four items -->
-                <div class="left-bottom-grid">
-                    <div class="left-bottom-grid-item">
-                        <p>{{total}}</p>
-                        <span>Total</span>
+    <div class="container">
+        <div class="test_summary">
+            <div class="left-panel">
+                <div class="left-parent-grid">
+                    <!-- Top grid: summary title, spans all columns -->
+                    <div class="left-top-grid">
+                        <h3 style="margin:0; text-align:center;">Test Case Count Summary</h3>
                     </div>
-                    <div class="left-bottom-grid-item">
-                        <p>{{passed}}</p>
-                        <span>Passed</span>
-                    </div>
-                    <div class="left-bottom-grid-item">
-                        <p>{{failed}}</p>
-                        <span>Failed</span>
-                    </div>
-                    <div class="left-bottom-grid-item">
-                        <p>{{skipped}}</p>
-                        <span>Skipped</span>
+                    <!-- Bottom grid: four items -->
+                    <div class="left-bottom-grid">
+                        <div class="left-bottom-grid-item">
+                            <p>{{total}}</p>
+                            <span>Total</span>
+                        </div>
+                        <div class="left-bottom-grid-item">
+                            <p>{{passed}}</p>
+                            <span>Passed</span>
+                        </div>
+                        <div class="left-bottom-grid-item">
+                            <p>{{failed}}</p>
+                            <span>Failed</span>
+                        </div>
+                        <div class="left-bottom-grid-item">
+                            <p>{{skipped}}</p>
+                            <span>Skipped</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="right-panel">
-            <canvas id="resultPieChart" width="120" height="120"></canvas>
-            <canvas id="resultBarChart" width="180" height="120"></canvas>
+        <div class="test_table"></div>
+        <div class="test_charts">
+            <div class="pie">
+                <canvas id="resultPieChart" width="200px" height="200px"></canvas>
+            </div>
+            <div class="graph"></div>
+            <div class="bar">
+                <canvas id="resultBarChart" width="500px" height="200px"></canvas>
+            </div>
         </div>
     </div>
+    <footer>
+        <div class="footer-content">
+
+            <div class="version">
+                Created By <strong>pytest-htmlx</strong><span id="pytest-version"></span> &nbsp;|&nbsp;
+                <strong>Version:</strong> <span id="pytest-htmlx-version">1.0.1</span>
+            </div>
+
+            <div class="author">
+                <strong>Author:</strong> Devaraju Garigapati &nbsp;|&nbsp;
+                <a href="https://github.com/devarajug/pytest-htmlx" target="_blank"
+                    style="color:#fff;text-decoration:underline;">pytest-htmlx</a>
+            </div>
+        </div>
+    </footer>
     <script>
         // Pie Chart
         const pieCtx = document.getElementById('resultPieChart').getContext('2d');
@@ -65,87 +315,100 @@
                 datasets: [{
                     label: 'Test Results',
                     data: [{{ passed }}, {{ failed }}, {{ skipped }}],
-                    backgroundColor: ['#28a745', '#dc3545', '#ffc107']
+            backgroundColor: ['#28a745', '#dc3545', '#ffc107']
                 }]
             },
             options: {
-                responsive: false,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Test Count Percentage',
-                        font: { size: 12 }
-                    },
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            boxWidth: 12,
-                            boxHeight: 12,
-                            font: { size: 10 }
-                        }
-                    },
-                    datalabels: {
-                        formatter: (value, ctx) => {
-                            let sum = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                            let percentage = sum ? (value * 100 / sum).toFixed(1) + '%' : '0%';
-                            return percentage;
-                        },
-                        color: '#FFF',
-                        font: { weight: 'bold', size: 10 }
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Test Count Percentage',
+                    font: { size: 12 }
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 12,
+                        boxHeight: 12,
+                        font: { size: 10 }
                     }
+                },
+                datalabels: {
+                    formatter: (value, ctx) => {
+                        let sum = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                        let percentage = sum ? (value * 100 / sum).toFixed(1) + '%' : '0%';
+                        return percentage;
+                    },
+                    color: '#FFF',
+                    font: { weight: 'bold', size: 10 }
                 }
-            },
+            }
+        },
             plugins: [ChartDataLabels]
         });
 
-        // Bar Chart
-        const barCtx = document.getElementById('resultBarChart').getContext('2d');
-        new Chart(barCtx, {
+        const barCtx = document.getElementById('resultBarChart');
+
+        const data = {
+            labels: {{ test_suites | tojson }},
+            datasets: [
+                {
+                    label: 'Passed',
+                    data: {{ passed_by_suite | tojson }},
+                    backgroundColor: 'rgba(40, 167, 69, 0.8)' // green
+                },
+                {
+                    label: 'Failed',
+                    data: {{ failed_by_suite | tojson }},
+                    backgroundColor: 'rgba(220, 53, 69, 0.8)' // red
+                },
+                {
+                    label: 'Skipped',
+                    data: {{ skipped_by_suite | tojson }},
+                    backgroundColor: 'rgba(255, 193, 7, 0.8)' // yellow
+                }
+            ]
+        };
+
+        const config = {
             type: 'bar',
-            data: {
-                labels: ['Passed', 'Failed', 'Skipped'],
-                datasets: [{
-                    label: 'Number of Tests',
-                    data: [{{ passed }}, {{ failed }}, {{ skipped }}],
-                    backgroundColor: ['#28a745', '#dc3545', '#ffc107']
-                }]
-            },
+            data: data,
             options: {
                 responsive: false,
                 maintainAspectRatio: false,
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Test Count Bar Chart',
-                        font: { size: 12 }
+                        text: 'Stacked Test Results by Suite'
                     },
                     legend: {
-                        display: false
-                    },
-                    datalabels: {
-                        anchor: 'end',
-                        align: 'top',
-                        color: '#222',
-                        font: { weight: 'bold', size: 10 },
-                        formatter: Math.round
+                        position: 'top'
                     }
                 },
                 scales: {
+                    x: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: 'Test Suites'
+                        }
+                    },
                     y: {
+                        stacked: true,
                         beginAtZero: true,
-                        precision: 0,
-                        ticks: {
-                            stepSize: 1
+                        title: {
+                            display: true,
+                            text: 'Number of Tests'
                         }
                     }
                 }
-            },
-            plugins: [ChartDataLabels]
-        });
+            }
+        };
+        new Chart(barCtx, config);
+
     </script>
-    <footer>
-        <p>Created By: Devaraju Garigapati</p>
-    </footer>
 </body>
+
 </html>

@@ -1,6 +1,6 @@
 import os
-import shutil
 from jinja2 import Environment, FileSystemLoader
+from pytest_htmlx.reporter.utils import extract_suite_summary, pct
 
 class HTMLReporter:
     _instance = None
@@ -24,15 +24,6 @@ class HTMLReporter:
     def generate_report(self):
         base_dir = os.path.dirname(__file__)
         template_dir = os.path.join(base_dir, "templates")
-        assets_dir = os.path.join(template_dir, "assets")
-        output_dir = os.path.dirname(os.path.abspath(self.report_path))
-        output_assets_dir = os.path.join(output_dir, "assets")
-
-        # Copy assets (CSS/JS) to output directory
-        if os.path.exists(assets_dir):
-            if os.path.exists(output_assets_dir):
-                shutil.rmtree(output_assets_dir)
-            shutil.copytree(assets_dir, output_assets_dir)
 
         env = Environment(loader=FileSystemLoader(template_dir))
         template = env.get_template("base.html")
@@ -40,11 +31,15 @@ class HTMLReporter:
         passed = sum(1 for r in self.results if r.get("outcome", "").lower() == "passed")
         failed = sum(1 for r in self.results if r.get("outcome", "").lower() == "failed")
         skipped = sum(1 for r in self.results if r.get("outcome", "").lower() == "skipped")
-        total = len(self.results)
+        total = passed + failed + skipped
+        
+        # Prepare data for the bar chart
 
-        # Calculate percentages
-        def pct(count):
-            return round((count / total) * 100, 1) if total else 0
+        suites, passed_by_suite, failed_by_suite, skipped_by_suite = extract_suite_summary(self.results)
+        test_suites = suites if suites else ["No Suites Found"]
+
+        
+        
 
         html = template.render(
             results=self.results,
@@ -52,10 +47,13 @@ class HTMLReporter:
             failed=failed,
             skipped=skipped,
             total=total,
-            passed_pct=pct(passed),
-            failed_pct=pct(failed),
-            skipped_pct=pct(skipped),
-            assets_path="assets",
+            passed_pct=pct(passed, total),
+            failed_pct=pct(failed, total),
+            skipped_pct=pct(skipped, total),
+            test_suites=test_suites,  # Example test suites
+            passed_by_suite=passed_by_suite,
+            failed_by_suite=failed_by_suite,
+            skipped_by_suite=skipped_by_suite,
         )
 
         with open(self.report_path, "w", encoding="utf-8") as f:

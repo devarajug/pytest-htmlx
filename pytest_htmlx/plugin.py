@@ -13,7 +13,8 @@ def pytest_runtest_logreport(report):
 
     if report.when == "call":
         outcome = {
-            "name": report.nodeid,
+            "test_suite": report.nodeid.split("::")[0].split("/")[-1].strip(".py"),
+            "test_name": report.nodeid.split("::")[-1],
             "outcome": report.outcome,
             "duration": report.duration,
             "longrepr": str(report.longrepr) if report.failed else "",

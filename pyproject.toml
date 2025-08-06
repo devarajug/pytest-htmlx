@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pytest-htmlx"
-version = "0.1.0"
+version = "0.1.1"
 description = "Custom HTML report plugin for Pytest with charts and tables"
 authors = [{ name = "Devaraju Garigapati", email = "devaraju.garigapati@gmail.com" }]
 dependencies = ["pytest", "jinja2"]

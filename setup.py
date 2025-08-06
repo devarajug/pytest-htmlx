@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pytest-htmlx",
-    version="0.1.0",
+    version="0.1.1",
     description="Custom HTML report plugin for Pytest with charts and tables",
     author="Devaraju Garigapati",
     author_email="devaraju.garigapati@gmail.com",

@@ -280,7 +280,9 @@
             <div class="pie">
                 <canvas id="resultPieChart" width="200px" height="200px"></canvas>
             </div>
-            <div class="graph"></div>
+            <div class="graph">
+                <canvas id="durationChart" width="200px" height="150px"></canvas>
+            </div>
             <div class="bar">
                 <canvas id="resultBarChart" width="500px" height="200px"></canvas>
             </div>
@@ -315,43 +317,34 @@
                 datasets: [{
                     label: 'Test Results',
                     data: [{{ passed }}, {{ failed }}, {{ skipped }}],
-            backgroundColor: ['#28a745', '#dc3545', '#ffc107']
+                    backgroundColor: ['#28a745', '#dc3545', '#ffc107']
                 }]
             },
             options: {
-            responsive: false,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Test Count Percentage',
-                    font: { size: 12 }
-                },
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        boxWidth: 12,
-                        boxHeight: 12,
-                        font: { size: 10 }
-                    }
-                },
-                datalabels: {
-                    formatter: (value, ctx) => {
-                        let sum = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                        let percentage = sum ? (value * 100 / sum).toFixed(1) + '%' : '0%';
-                        return percentage;
+                responsive: false,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Test Count Percentage',
+                        font: { size: 12 }
                     },
-                    color: '#FFF',
-                    font: { weight: 'bold', size: 10 }
-                }
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 12,
+                            boxHeight: 12,
+                            font: { size: 10 }
+                        }
+                    },
+                    
+                },
             }
-        },
-            plugins: [ChartDataLabels]
         });
 
         const barCtx = document.getElementById('resultBarChart');
 
-        const data = {
+        const bar_data = {
             labels: {{ test_suites | tojson }},
             datasets: [
                 {
@@ -372,9 +365,9 @@
             ]
         };
 
-        const config = {
+        const bar_config = {
             type: 'bar',
-            data: data,
+            data: bar_data,
             options: {
                 responsive: false,
                 maintainAspectRatio: false,
@@ -406,8 +399,50 @@
                 }
             }
         };
-        new Chart(barCtx, config);
+        new Chart(barCtx, bar_config);
 
+        const line_labels = {{ test_names | tojson }};
+        const line_data = {
+            labels: line_labels,
+            datasets: [{
+                label: 'Duration (seconds)',
+                data: {{ tests_duration | tojson }},
+                fill: false,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                tension: 0.3,
+                pointBackgroundColor: 'rgba(255, 99, 132, 0.5)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderWidth: 2,
+                pointBorderColor: 'rgba(255, 99, 132, 1)',
+                pointHoverBackgroundColor: 'rgba(255, 99, 132, 1)',
+                pointHoverBorderColor: 'rgba(255, 99, 132, 1)',
+                pointHoverBorderWidth: 2,
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                pointHoverRadius: 5,
+                pointStyle: 'circle',
+                pointRadius: 5,
+                pointHoverRadius: 7
+            }]
+        };
+
+        const line_config = {
+            type: 'line',
+            data: line_data,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Test Duration Over Time',
+                    }
+                }
+            }
+        };
+        new Chart(
+            document.getElementById('durationChart'),
+            line_config
+        );
     </script>
 </body>
 

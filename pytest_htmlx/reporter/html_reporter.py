@@ -38,7 +38,9 @@ class HTMLReporter:
         suites, passed_by_suite, failed_by_suite, skipped_by_suite = extract_suite_summary(self.results)
         test_suites = suites if suites else ["No Suites Found"]
 
-        
+        # Prepare data for the duration chart
+        test_names = [t["test_name"] for t in self.results]
+        durations = [round(t["duration"], 6) for t in self.results]
         
 
         html = template.render(
@@ -54,6 +56,8 @@ class HTMLReporter:
             passed_by_suite=passed_by_suite,
             failed_by_suite=failed_by_suite,
             skipped_by_suite=skipped_by_suite,
+            tests_duration=durations,
+            test_names=test_names,
         )
 
         with open(self.report_path, "w", encoding="utf-8") as f:

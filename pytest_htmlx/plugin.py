@@ -17,7 +17,8 @@ def pytest_runtest_logreport(report):
             "test_name": report.nodeid.split("::")[-1],
             "outcome": report.outcome,
             "duration": report.duration,
-            "longrepr": str(report.longrepr) if report.failed else "",
+            "error_message": str(report.longrepr.reprcrash.message) if report.failed else "",
+            "traceback": str(report.longrepr) if report.failed else "",
         }
         
         reporter.add_result(outcome)

@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-    <style>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+     <style>
         body {
             margin: 0;
             padding: 0;
@@ -198,7 +201,7 @@
         }
 
         .test_table {
-            background-color: #e2e2e2;
+            background-color: #fff;
             padding: 20px;
             border-radius: 5px;
             grid-row: span 2;
@@ -235,6 +238,75 @@
             justify-self: end;
             /* justify-content: right; */
             grid-column: 3;
+        }
+
+        .test_table h1 {
+            text-align: center;
+        }
+
+        .test_table .filters {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .test_table .filters button {
+            padding: 0.5rem 1rem;
+            margin: 0.2rem;
+            border: none;
+            background-color: #ddd;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .table-scroll-container {
+            max-height: 400px;
+            overflow-x: auto;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .test_table .filters button.active {
+            background-color: #146b9a;
+            color: #fff;
+        }
+
+        .test_table .table-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 2fr 1fr 1fr 3fr;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .test_table .table-grid div {
+            padding: 0.75rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .test_table .table-grid div.header {
+            background-color: #2d6f93;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .test_table .row:nth-child(even) {
+            background-color: #f4f4f4;
+        }
+
+        .test_table .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .test_table .table-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .test_table .table-grid div:nth-child(n+6):not(.header) {
+                display: none;
+            }
         }
     </style>
 
@@ -275,7 +347,25 @@
                 </div>
             </div>
         </div>
-        <div class="test_table"></div>
+        <div class="test_table">
+            <div class="filters">
+                <button onclick="filterRows('all')" class="active">All</button>
+                <button onclick="filterRows('passed')">Passed</button>
+                <button onclick="filterRows('failed')">Failed</button>
+                <button onclick="filterRows('skipped')">Skipped</button>
+            </div>
+            
+            <div class="table-scroll-container">
+                <div class="table-grid" id="reportTable">
+                    <div class="header">Test Suite</div>
+                    <div class="header">Test Name</div>
+                    <div class="header">Outcome</div>
+                    <div class="header">Duration (s)</div>
+                    <div class="header">Error Message</div>
+                    <!-- Dynamic rows are inserted here by JS -->
+                </div>
+            </div>
+        </div>
         <div class="test_charts">
             <div class="pie">
                 <canvas id="resultPieChart" width="200px" height="200px"></canvas>
@@ -443,6 +533,46 @@
             document.getElementById('durationChart'),
             line_config
         );
+
+        const testData = {{ results | tojson }};
+
+        const table = document.getElementById('reportTable');
+
+        function renderRows(data) {
+            // Remove all existing data rows
+            document.querySelectorAll('#reportTable .row').forEach(el => el.remove());
+
+            data.forEach(test => {
+            ['test_suite', 'test_name', 'outcome', 'duration', 'error_message'].forEach(key => {
+                const div = document.createElement('div');
+                div.className = `row ${test.outcome}`;
+                div.textContent = key === 'duration' ? test[key].toFixed(2) : test[key];
+                table.appendChild(div);
+            });
+            });
+        }
+
+        function filterRows(outcome) {
+            const allBtns = document.querySelectorAll('.filters button');
+            allBtns.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.filters button[onclick*="${outcome}"]`).classList.add('active');
+
+            const rows = document.querySelectorAll('#reportTable .row');
+            if (outcome === 'all') {
+            rows.forEach(row => row.classList.remove('hidden'));
+            } else {
+            rows.forEach(row => {
+                if (row.classList.contains(outcome)) {
+                row.classList.remove('hidden');
+                } else {
+                row.classList.add('hidden');
+                }
+            });
+            }
+        }
+
+        renderRows(testData);
+
     </script>
 </body>
 

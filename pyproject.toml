@@ -1,14 +1,43 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "pytest-htmlx"
-version = "0.1.1"
+version = "0.1.2"
 description = "Custom HTML report plugin for Pytest with charts and tables"
-authors = [{ name = "Devaraju Garigapati", email = "devaraju.garigapati@gmail.com" }]
-dependencies = ["pytest", "jinja2"]
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+  { name = "Devaraju Garigapati", email = "devaraju.garigapati@gmail.com" }
+]
 requires-python = ">=3.7"
+dependencies = [
+  "pytest",
+  "jinja2"
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Testing",
+  "Framework :: Pytest",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11"
+]
+
+[project.urls]
+Homepage = "https://github.com/devgarigapati/pytest-htmlx"
+Repository = "https://github.com/devgarigapati/pytest-htmlx"
+Issues = "https://github.com/devgarigapati/pytest-htmlx/issues"
+
+[tool.setuptools]
+packages = ["pytest_htmlx"]
 
 [project.entry-points.pytest11]
 htmlx = "pytest_htmlx.plugin"

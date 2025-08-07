@@ -222,7 +222,7 @@
 
         .footer-content {
             display: grid;
-            grid-template-columns: 2fr 5fr 2fr;
+            grid-template-columns: 3fr 5fr 4fr;
             gap: 10px;
             align-items: center;
             height: 100%;
@@ -230,15 +230,24 @@
         }
 
         .version {
-            justify-self: start;
+            align-items: left;
+            justify-content: left;
             grid-column: 1;
+        }
+        .verison_details {
+            font-size: 0.9em;
+            color: #ccc;
         }
 
         .author {
-            justify-self: end;
-            /* justify-content: right; */
-            grid-column: 3;
+            align-items: right;
+            justify-content: right;
+            grid-column: -1;
         }
+        .author-name {
+            font-size: 0.9em;
+            color: #ccc;
+        }   
 
         .test_table h1 {
             text-align: center;
@@ -259,7 +268,7 @@
         }
 
         .table-scroll-container {
-            max-height: 400px;
+            max-height: 600px;
             overflow-x: auto;
             overflow-y: auto;
             border: 1px solid #ccc;
@@ -382,14 +391,18 @@
         <div class="footer-content">
 
             <div class="version">
-                Created By <strong>pytest-htmlx</strong><span id="pytest-version"></span> &nbsp;|&nbsp;
-                <strong>Version:</strong> <span id="pytest-htmlx-version">1.0.1</span>
+                <div class="verison_details">
+                    Created By <strong>pytest-htmlx</strong><span id="pytest-version"></span> &nbsp;|&nbsp;
+                    <strong>Version:</strong> <span id="pytest-htmlx-version">0.1.2</span>
+                </div>
             </div>
 
             <div class="author">
-                <strong>Author:</strong> Devaraju Garigapati &nbsp;|&nbsp;
-                <a href="https://github.com/devarajug/pytest-htmlx" target="_blank"
-                    style="color:#fff;text-decoration:underline;">pytest-htmlx</a>
+                <div class="author-name">
+                    <strong>Author:</strong> Devaraju Garigapati &nbsp;|&nbsp;
+                    <a href="https://github.com/devarajug/pytest-htmlx" target="_blank"
+                        style="color:#fff;text-decoration:underline;">pytest-htmlx</a>
+                </div>
             </div>
         </div>
     </footer>

@@ -21,11 +21,11 @@ def test_fail_one():
 
 def test_fail_two():
     time.sleep(0.2)
-    assert "a" == "b"
+    assert 2 == "2"
 
 def test_fail_three():
     time.sleep(0.5)
-    assert [1, 2] == [2, 1]
+    assert None
 
 def test_fail_four():
     time.sleep(0.1)
@@ -44,6 +44,7 @@ def test_skip_two():
     pytest.skip("demonstration skip 2")
     assert True
 
-@pytest.mark.skip(reason="demonstration skip 3")
 def test_skip_three():
+    time.sleep(0.4)
+    pytest.skip("demonstration skip 3")
     assert True

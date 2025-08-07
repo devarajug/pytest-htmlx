@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="pytest-htmlx",
-    version="0.1.2",
+    version="0.3.0",
     description="Custom HTML report plugin for Pytest with charts and tables",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -26,7 +26,7 @@ setup(
         ]
     },
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 3 - Beta",
         "Framework :: Pytest",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Testing",

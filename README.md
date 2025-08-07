@@ -37,7 +37,7 @@ pytest --htmlx=results/my-report.html
 ## 📸 HTML Report Screenshot
 
 Below is an example of what the HTML report looks like:
-![HTML Report Example](pytest-htmlx.png)
+![HTML Report Example](https://raw.githubusercontent.com/devarajug/pytest-htmlx/main/pytest-htmlx.png)
 
 ## 📝 License
 This project is licensed under the MIT License.

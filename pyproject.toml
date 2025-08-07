@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pytest-htmlx"
-version = "0.3.0"
+version = "0.3.1"
 description = "Custom HTML report plugin for Pytest with charts and tables"
 readme = "README.md"
 license = { text = "MIT" }
@@ -17,7 +17,7 @@ dependencies = [
   "jinja2"
 ]
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 3 - Beta",
   "Intended Audience :: Developers",
   "Topic :: Software Development :: Testing",
   "Framework :: Pytest",
@@ -32,9 +32,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/devgarigapati/pytest-htmlx"
-Repository = "https://github.com/devgarigapati/pytest-htmlx"
-Issues = "https://github.com/devgarigapati/pytest-htmlx/issues"
+Homepage = "https://github.com/devarajug/pytest-htmlx"
+Repository = "https://github.com/devarajug/pytest-htmlx"
+Issues = "https://github.com/devarajug/pytest-htmlx/issues"
 
 [tool.setuptools]
 packages = ["pytest_htmlx"]

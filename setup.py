@@ -7,13 +7,13 @@ long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="pytest-htmlx",
-    version="0.3.0",
+    version="0.3.1",
     description="Custom HTML report plugin for Pytest with charts and tables",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Devaraju Garigapati",
     author_email="devaraju.garigapati@gmail.com",
-    url="https://github.com/devgarigapati/pytest-htmlx",
+    url="https://github.com/devrajug/pytest-htmlx",
     packages=find_packages(),
     install_requires=[
         "pytest",

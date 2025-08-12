@@ -34,6 +34,16 @@ pytest --htmlx=results/my-report.html
 - Summary of passed/failed/skipped tests
 - Stack traces and log capture
 
+## 📅 Future Releases
+We’re working on exciting new capabilities for pytest-htmlx to make test reporting even more powerful:
+
+- 📷 Screenshot Support for UI Tests — automatically capture and embed screenshots for Selenium, Playwright, or other UI automation test failures.
+- 📝 Test Log Embedding — include detailed per-test logs inside the HTML report for easier debugging without switching between the terminal and report.
+- 📊 Rich Visualizations — add trend charts and test run metrics over time.
+
+💡 Feature suggestions are always welcome — submit ideas via our ![GitHub Issues](https://github.com/devarajug/pytest-htmlx/issues).
+
+
 ## 📸 HTML Report Screenshot
 
 Below is an example of what the HTML report looks like:
@@ -45,3 +55,7 @@ This project is licensed under the MIT License.
 ## 🙌 Contributing
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
+## 🔗 Links
+- PyPI: https://pypi.org/project/pytest-htmlx/
+- Source Code: https://github.com/devarajug/pytest-htmlx
+- Issues: GitHub Issue Tracker

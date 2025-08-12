@@ -41,7 +41,7 @@ We’re working on exciting new capabilities for pytest-htmlx to make test repor
 - 📝 Test Log Embedding — include detailed per-test logs inside the HTML report for easier debugging without switching between the terminal and report.
 - 📊 Rich Visualizations — add trend charts and test run metrics over time.
 
-💡 Feature suggestions are always welcome — submit ideas via our ![GitHub Issues](https://github.com/devarajug/pytest-htmlx/issues).
+💡 Feature suggestions are always welcome — submit ideas via our [GitHub Issues](https://github.com/devarajug/pytest-htmlx/issues).
 
 
 ## 📸 HTML Report Screenshot
@@ -58,4 +58,4 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 ## 🔗 Links
 - PyPI: https://pypi.org/project/pytest-htmlx/
 - Source Code: https://github.com/devarajug/pytest-htmlx
-- Issues: GitHub Issue Tracker
+- Issues: [GitHub Issue Tracker](https://github.com/devarajug/pytest-htmlx/issues)

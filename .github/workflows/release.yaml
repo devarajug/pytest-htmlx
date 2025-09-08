@@ -55,9 +55,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install --index-url https://test.pypi.org/simple/ --no-deps mypackage
 
-      - name: Publish to PyPI
-        if: success()
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN }}
+      # - name: Publish to PyPI
+      #   if: success()
+      #   uses: pypa/gh-action-pypi-publish@release/v1
+      #   with:
+      #     user: __token__
+      #     password: ${{ secrets.PYPI_API_TOKEN }}

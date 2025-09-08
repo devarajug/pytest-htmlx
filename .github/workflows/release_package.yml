@@ -51,10 +51,17 @@ jobs:
           pip install build twine
 
       - name: Build package
-        run: python -m build
+        run: |
+          rm -rf dist/ build/ *.egg-info
+          python -m build
 
       - name: Upload to TestPyPI
-        run: ./scripts/upload_testpypi.sh
+        run: |
+          twine upload \
+          --repository-url https://test.pypi.org/legacy/ \
+          -u __token__ \
+          -p "$TEST_PYPI_API_TOKEN" \
+          dist/*
         env:
           TEST_PYPI_API_TOKEN: ${{ secrets.TEST_PYPI_API_TOKEN }}
 
@@ -65,6 +72,10 @@ jobs:
           python -c "import pytest_htmlx; print(pytest_htmlx.__version__)"
 
       - name: Publish to PyPI
-        run: ./scripts/upload_pypi.sh
+        run: |
+          twine upload \
+          -u __token__ \
+          -p "$PYPI_API_TOKEN" \
+          dist/*
         env:
           PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}

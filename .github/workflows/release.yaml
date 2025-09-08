@@ -1,0 +1,48 @@
+name: Publish Package
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+
+      - name: Build package
+        run: python -m build
+
+      # Step 1: Publish to TestPyPI
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+
+      # Step 2: Install from TestPyPI to verify
+      - name: Verify install from TestPyPI
+        run: |
+          python -m pip install --upgrade pip
+          pip install --index-url https://test.pypi.org/simple/ --no-deps mypackage
+
+      # Step 3: Publish to PyPI (only if TestPyPI succeeded)
+      - name: Publish to PyPI
+        if: success()
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}

@@ -68,8 +68,7 @@ jobs:
           if [ -z "$TEST_PYPI_API_TOKEN" ]; then
             echo "TEST_PYPI_API_TOKEN not set"; exit 1
           fi
-          twine upload \
-            --repository-url https://test.pypi.org/legacy/ \
+          twine upload --verbose --repository-url https://test.pypi.org/legacy/ \
             -u __token__ \
             -p "$TEST_PYPI_API_TOKEN" \
             dist/*

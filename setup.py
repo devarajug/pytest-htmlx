@@ -1,13 +1,22 @@
 from setuptools import setup, find_packages
 from pathlib import Path
+import re
 
-# Load long description from README.md
-this_directory = Path(__file__).parent
-long_description = (this_directory / "README.md").read_text(encoding="utf-8")
+root_dir = Path(__file__).parent
+long_description = (root_dir / "README.md").read_text(encoding="utf-8")
+
+def get_version():
+    init_file = root_dir / "pytest_htmlx" / "__init__.py"
+    content = init_file.read_text()
+    match = re.search(r'__version__ = "(.+)"', content)
+    if not match:
+        raise RuntimeError("Unable to find version string in __init__.py")
+    return match.group(1)
+
 
 setup(
     name="pytest-htmlx",
-    version="0.3.1",
+    version=get_version(),
     description="Custom HTML report plugin for Pytest with charts and tables",
     long_description=long_description,
     long_description_content_type="text/markdown",
